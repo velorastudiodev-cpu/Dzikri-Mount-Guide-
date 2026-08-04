@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
   <meta charset="UTF-8" />
@@ -119,6 +119,10 @@
     .stat-num{font-family:'Playfair Display',serif;font-size:28px;font-weight:700;color:var(--text-dark);line-height:1;}
     .stat-label{font-size:11.5px;color:var(--text-muted-cream);margin-top:4px;line-height:1.35;}
 
+    /* === LOGO WATERMARK DECORATIONS === */
+    .section-logo-watermark{position:absolute;pointer-events:none;opacity:.04;z-index:0;user-select:none;}
+    .section-logo-watermark img{width:100%;height:100%;object-fit:contain;}
+    .section-has-watermark{position:relative;overflow:hidden;}
     /* === LAYANAN === */
     #layanan{background:var(--dark);padding:100px 0;}
     .services-header{display:flex;gap:48px;align-items:flex-start;margin-bottom:44px;}
@@ -142,7 +146,7 @@
     .service-link:hover{gap:10px;color:var(--olive-light);}
 
     /* === KENAPA === */
-    #kenapa{background:var(--cream);padding:92px 0;}
+    #kenapa{background:var(--cream);padding:92px 0;position:relative;overflow:hidden;}
     .kenapa-heading-row{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:56px;flex-wrap:wrap;gap:20px;}
     .kenapa-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:16px;}
     .kenapa-item{text-align:center;padding:18px 10px;}
@@ -180,7 +184,7 @@
     .lightbox-next{right:16px;}
 
     /* === INCLUDE === */
-    #include{background:var(--cream);padding:100px 0;}
+    #include{background:var(--cream);padding:100px 0;position:relative;overflow:hidden;}
     .include-title-row{margin-bottom:44px;}
     .include-grid{display:grid;grid-template-columns:repeat(4,1fr) 260px;gap:36px;align-items:start;}
     .include-col-heading{display:flex;align-items:center;gap:10px;font-size:12.5px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--text-dark);margin-bottom:16px;}
@@ -303,7 +307,7 @@
 <nav id="navbar" role="navigation" aria-label="Navigasi utama">
   <div class="container nav-inner">
     <a href="#hero" class="nav-logo" aria-label="Dzikri Mountain Guide - Beranda">
-      <svg width="34" height="34" viewBox="0 0 36 36" fill="none" aria-hidden="true"><rect width="36" height="36" rx="7" fill="#8B9560"/><path d="M5 27 L12 13 L18 20 L24 11 L31 27Z" fill="none" stroke="white" stroke-width="1.8" stroke-linejoin="round"/><circle cx="24" cy="10.5" r="2" fill="#F2EFE7"/></svg>
+      <img src="Gemini_Generated_Image_s64qwds64qwds64q-removebg-preview.png" alt="Dzikri Mountain Guide Logo" width="70" height="38" style="object-fit:contain;object-position:center;filter:brightness(0) invert(1);" />
       <div class="nav-logo-text"><div class="brand">DZIKRI</div><div class="sub">Mountain Guide</div></div>
     </a>
     <ul class="nav-links" role="list">
@@ -436,6 +440,9 @@
 
 <!-- KENAPA MEMILIH DZIKRI -->
 <section id="kenapa" aria-label="Kenapa memilih Dzikri">
+  <!-- Decorative watermark logos -->
+  <div class="section-logo-watermark" style="width:420px;height:230px;top:-30px;right:-60px;opacity:.14;transform:rotate(15deg);"><img src="Gemini_Generated_Image_s64qwds64qwds64q-removebg-preview.png" alt="" aria-hidden="true" /></div>
+  <div class="section-logo-watermark" style="width:260px;height:142px;bottom:-20px;left:20px;opacity:.10;transform:rotate(-8deg);"><img src="Gemini_Generated_Image_s64qwds64qwds64q-removebg-preview.png" alt="" aria-hidden="true" /></div>
   <div class="container">
     <div class="kenapa-heading-row"><div data-aos="fade-right"><div class="section-label" style="color:var(--olive-dark)">Keunggulan Kami</div><h2 class="section-heading dark-text">Kenapa Memilih<br><span class="accent" style="color:var(--olive-dark);font-style:italic">Dzikri</span>?</h2></div></div>
     <div class="kenapa-grid">
@@ -494,6 +501,9 @@
 
 <!-- INCLUDE / EXCLUDE -->
 <section id="include" aria-label="Include dan exclude paket pendakian">
+  <!-- Decorative watermark logos -->
+  <div class="section-logo-watermark" style="width:500px;height:273px;top:50%;left:50%;transform:translate(-50%,-50%) rotate(-5deg);opacity:.13;"><img src="Gemini_Generated_Image_s64qwds64qwds64q-removebg-preview.png" alt="" aria-hidden="true" /></div>
+  <div class="section-logo-watermark" style="width:240px;height:131px;top:10px;right:10px;opacity:.12;transform:rotate(20deg);"><img src="Gemini_Generated_Image_s64qwds64qwds64q-removebg-preview.png" alt="" aria-hidden="true" /></div>
   <div class="container">
     <div class="include-title-row" data-aos="fade-up">
       <div class="section-label" style="color:var(--olive-dark)">Paket Trip</div>
@@ -528,7 +538,10 @@
 </section>
 
 <!-- TESTIMONI + FAQ + QUOTE (foto lokal) -->
-<section id="testimoni" aria-label="Testimoni dan FAQ">
+<section id="testimoni" aria-label="Testimoni dan FAQ" style="position:relative;overflow:hidden;">
+  <!-- Decorative watermark logo on dark testi panel area -->
+  <div class="section-logo-watermark" style="width:320px;height:175px;bottom:-20px;left:-30px;opacity:.18;transform:rotate(-12deg);filter:brightness(0) invert(1);"><img src="Gemini_Generated_Image_s64qwds64qwds64q-removebg-preview.png" alt="" aria-hidden="true" /></div>
+  <div class="section-logo-watermark" style="width:200px;height:109px;top:20px;right:40px;opacity:.12;transform:rotate(8deg);filter:brightness(0) invert(1);"><img src="Gemini_Generated_Image_s64qwds64qwds64q-removebg-preview.png" alt="" aria-hidden="true" /></div>
   <div class="testi-panel">
     <div class="testi-label">Testimoni</div>
     <div class="testi-quote-icon" aria-hidden="true">"</div>
@@ -566,7 +579,7 @@
   <div class="container">
     <div class="footer-grid">
       <div>
-        <div class="footer-logo-wrap"><svg width="32" height="32" viewBox="0 0 36 36" fill="none" aria-hidden="true"><rect width="36" height="36" rx="7" fill="#8B9560"/><path d="M5 27 L12 13 L18 20 L24 11 L31 27Z" fill="none" stroke="white" stroke-width="1.8" stroke-linejoin="round"/><circle cx="24" cy="10.5" r="2" fill="#F2EFE7"/></svg><div><div style="font-size:13px;font-weight:700;letter-spacing:.08em;color:var(--white)">DZIKRI</div><div style="font-size:8.5px;letter-spacing:.14em;color:var(--text-muted-dark);text-transform:uppercase">Mountain Guide</div></div></div>
+        <div class="footer-logo-wrap"><img src="Gemini_Generated_Image_s64qwds64qwds64q-removebg-preview.png" alt="Dzikri Mountain Guide Logo" width="88" height="48" style="object-fit:contain;object-position:center;filter:brightness(0) invert(1) sepia(1) saturate(3) hue-rotate(50deg);opacity:.9;" /><div><div style="font-size:13px;font-weight:700;letter-spacing:.08em;color:var(--white)">DZIKRI</div><div style="font-size:8.5px;letter-spacing:.14em;color:var(--text-muted-dark);text-transform:uppercase">Mountain Guide</div></div></div>
         <p class="footer-tagline">Melayani pendakian Gunung Ciremai dengan pengalaman terbaik, aman dan berkesan.</p>
         <div class="footer-socials">
           <a href="https://instagram.com" target="_blank" rel="noopener" class="footer-social" aria-label="Instagram"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/></svg></a>
