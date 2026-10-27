@@ -19,6 +19,19 @@ const fail = (m) => { throw new Error(m); };
   const wrong = waLinks.filter((h) => !h.includes(`wa.me/${WA}`));
   if (wrong.length) fail(`WhatsApp links with another number: ${wrong.join(', ')}`);
 
+  // Hero slideshow: arrows, dots, drag, and lazily loaded slide images.
+  const heroIndex = () => page.textContent('#hero-index');
+  await page.locator('[data-hero="1"]').click();
+  if ((await heroIndex()) !== '02') fail('Hero next arrow failed');
+  const slide2 = await page.$eval('.hero-slide.is-active img', (img) => img.currentSrc || img.src);
+  if (!slide2.includes('clouds-blue')) fail(`Second slide image not loaded: ${slide2}`);
+  await page.locator('.hero-dots button').nth(4).click();
+  if ((await heroIndex()) !== '05') fail('Hero dot failed');
+  await page.mouse.move(900, 300); await page.mouse.down(); await page.mouse.move(600, 310, { steps: 5 }); await page.mouse.up();
+  if ((await heroIndex()) !== '01') fail('Hero drag did not wrap to the first slide');
+  await page.waitForFunction(() => document.getElementById('hero-index').textContent === '02', null, { timeout: 8000 })
+    .catch(() => fail('Hero autoplay did not advance'));
+
   // Calculator: open trip = Rp250.000 x people, DP Rp50.000 x people.
   await page.locator('#calc-people').fill('4');
   await page.locator('#calc-people').dispatchEvent('input');

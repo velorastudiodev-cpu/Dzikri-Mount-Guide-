@@ -41,6 +41,54 @@ const onScroll = () => {
 addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(onScroll); } }, { passive: true });
 onScroll();
 
+/* Hero slideshow: autoplay, swipe/drag, arrows, dots */
+const hero = $('.hero'), heroSlides = $$('.hero-slide'), heroDots = $$('.hero-dots button');
+const HERO_INTERVAL = 6000;
+let heroIndex = 0, heroTimer = 0, heroInView = true;
+hero.style.setProperty('--hero-interval', HERO_INTERVAL + 'ms');
+const loadSlide = (slide) => {
+  // Slides after the first carry data-* sources so they never compete with the first paint.
+  $$('[data-srcset]', slide).forEach((el) => { el.srcset = el.dataset.srcset; el.removeAttribute('data-srcset'); });
+  $$('[data-src]', slide).forEach((el) => { el.src = el.dataset.src; el.removeAttribute('data-src'); });
+};
+const goHero = (i) => {
+  heroIndex = (i + heroSlides.length) % heroSlides.length;
+  loadSlide(heroSlides[heroIndex]);
+  heroSlides.forEach((s, n) => { s.classList.toggle('is-active', n === heroIndex); s.setAttribute('aria-hidden', String(n !== heroIndex)); });
+  heroDots.forEach((d, n) => (n === heroIndex ? d.setAttribute('aria-current', 'true') : d.removeAttribute('aria-current')));
+  $('#hero-index').textContent = String(heroIndex + 1).padStart(2, '0');
+  scheduleHero();
+};
+const scheduleHero = () => {
+  clearTimeout(heroTimer);
+  const paused = reduced || !heroInView || document.hidden;
+  hero.classList.toggle('is-paused', paused);
+  if (!paused) heroTimer = setTimeout(() => goHero(heroIndex + 1), HERO_INTERVAL);
+};
+$$('[data-hero]').forEach((b) => b.addEventListener('click', () => goHero(heroIndex + Number(b.dataset.hero))));
+heroDots.forEach((d) => d.addEventListener('click', () => goHero(Number(d.dataset.slide))));
+hero.addEventListener('keydown', (e) => {
+  if (e.target.closest('.hero-controls') && (e.key === 'ArrowLeft' || e.key === 'ArrowRight')) goHero(heroIndex + (e.key === 'ArrowLeft' ? -1 : 1));
+});
+let drag = null;
+hero.addEventListener('pointerdown', (e) => {
+  if (e.button !== 0 || e.target.closest('a, button, .hero-card')) return;
+  drag = { x: e.clientX, y: e.clientY };
+});
+hero.addEventListener('pointermove', (e) => { if (drag && Math.abs(e.clientX - drag.x) > 10) hero.classList.add('is-dragging'); });
+const endDrag = (e) => {
+  if (!drag) return;
+  const dx = e.clientX - drag.x, dy = e.clientY - drag.y;
+  if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) goHero(heroIndex + (dx < 0 ? 1 : -1));
+  drag = null;
+  hero.classList.remove('is-dragging');
+};
+hero.addEventListener('pointerup', endDrag);
+hero.addEventListener('pointercancel', () => { drag = null; hero.classList.remove('is-dragging'); });
+new IntersectionObserver(([e]) => { heroInView = e.isIntersecting; scheduleHero(); }).observe(hero);
+document.addEventListener('visibilitychange', scheduleHero);
+addEventListener('load', () => { loadSlide(heroSlides[1]); scheduleHero(); }, { once: true });
+
 /* Reveal on scroll + stat counters */
 const revealObserver = new IntersectionObserver((entries) => entries.forEach((e) => {
   if (!e.isIntersecting) return;

@@ -89,7 +89,7 @@
         <a href="#kontak">Kontak</a>
         <a class="btn btn-sun nav-sheet-cta" href="https://wa.me/6281214799020?text=Halo%20Dzikri%2C%20saya%20mau%20booking%20trip%20Gunung%20Ciremai" target="_blank" rel="noopener"><svg><use href="#i-wa" /></svg> Booking via WhatsApp</a>
       </nav>
-      <a class="btn btn-sun btn-sm nav-cta" href="https://wa.me/6281214799020?text=Halo%20Dzikri%2C%20saya%20mau%20booking%20trip%20Gunung%20Ciremai" target="_blank" rel="noopener">Booking <svg><use href="#i-arrow" /></svg></a>
+      <a class="btn btn-olive btn-sm nav-cta" href="https://wa.me/6281214799020?text=Halo%20Dzikri%2C%20saya%20mau%20booking%20trip%20Gunung%20Ciremai" target="_blank" rel="noopener">Booking <svg><use href="#i-arrow" /></svg></a>
       <button class="menu-toggle" id="menu-toggle" aria-controls="nav-links" aria-expanded="false" aria-label="Buka menu"><span></span><span></span></button>
     </div>
   </header>
@@ -99,18 +99,42 @@
 
     <!-- Hero -->
     <section class="hero" aria-labelledby="hero-title">
-      <picture class="hero-media">
-        <source media="(max-width: 767px)" srcset="assets/img/hero-m-720.webp" />
-        <img src="assets/img/hero-1280.webp" srcset="assets/img/hero-768.webp 768w, assets/img/hero-1280.webp 1280w" sizes="100vw" alt="" width="1280" height="960" fetchpriority="high" />
-      </picture>
+      <div class="hero-slides" id="hero-slides" aria-hidden="true">
+        <picture class="hero-slide is-active">
+          <source media="(max-width: 767px)" srcset="assets/img/hero-m-720.webp" />
+          <img src="assets/img/hero-1280.webp" srcset="assets/img/hero-768.webp 768w, assets/img/hero-1280.webp 1280w" sizes="100vw" alt="" width="1280" height="960" fetchpriority="high" draggable="false" />
+        </picture>
+        <picture class="hero-slide" aria-hidden="true">
+          <source media="(max-width: 767px)" data-srcset="assets/img/sunrise-crater-960.webp" />
+          <img data-src="assets/img/clouds-blue-1280.webp" alt="" width="1280" height="960" draggable="false" />
+        </picture>
+        <picture class="hero-slide" aria-hidden="true">
+          <source media="(max-width: 767px)" data-srcset="assets/img/summit-pillar-960.webp" />
+          <img data-src="assets/img/sunrise-ridge-1280.webp" alt="" width="1280" height="960" draggable="false" />
+        </picture>
+        <picture class="hero-slide" aria-hidden="true">
+          <source media="(max-width: 767px)" data-srcset="assets/img/golden-horizon-960.webp" />
+          <img data-src="assets/img/cirebon-sunset-1600.webp" alt="" width="1280" height="960" draggable="false" />
+        </picture>
+        <picture class="hero-slide" aria-hidden="true">
+          <source media="(max-width: 767px)" data-srcset="assets/img/crater-960.webp" />
+          <img data-src="assets/img/crater-wide-1280.webp" alt="" width="1280" height="960" draggable="false" />
+        </picture>
+      </div>
       <div class="hero-topo" aria-hidden="true"></div>
       <div class="hero-inner shell">
         <p class="kicker anim" style="--d:0">Guide &amp; Porter · Gunung Ciremai via Palutungan</p>
         <h1 id="hero-title" class="anim" style="--d:1">Explore<br />Gunung Ciremai<br /><em>with Local Expert</em></h1>
         <p class="hero-lede anim" style="--d:2">Pendakian yang aman, nyaman, dan berkesan ke atap Jawa Barat, dipandu guide lokal yang sudah menemani 500+ pendaki.</p>
         <div class="hero-actions anim" style="--d:3">
-          <a class="btn btn-sun" href="https://wa.me/6281214799020?text=Halo%20Dzikri%2C%20saya%20mau%20booking%20trip%20Gunung%20Ciremai" target="_blank" rel="noopener"><svg><use href="#i-wa" /></svg> Booking via WhatsApp</a>
+          <a class="btn btn-olive" href="https://wa.me/6281214799020?text=Halo%20Dzikri%2C%20saya%20mau%20booking%20trip%20Gunung%20Ciremai" target="_blank" rel="noopener"><svg><use href="#i-wa" /></svg> Booking via WhatsApp</a>
           <a class="btn btn-ghost" href="#layanan">Lihat Layanan <svg><use href="#i-arrow" /></svg></a>
+        </div>
+        <div class="hero-controls anim" style="--d:4">
+          <button class="hero-arrow" data-hero="-1" aria-label="Foto sebelumnya" aria-controls="hero-slides"><svg class="flip"><use href="#i-chev" /></svg></button>
+          <div class="hero-dots" role="group" aria-label="Pilih foto"><button aria-label="Foto 1: Matahari terbit di atas lautan awan" aria-current="true" data-slide="0"></button><button aria-label="Foto 2: Lautan awan pagi dari puncak" data-slide="1"></button><button aria-label="Foto 3: Sunrise bersama pendaki di punggungan" data-slide="2"></button><button aria-label="Foto 4: Senja kota Cirebon dari lereng Ciremai" data-slide="3"></button><button aria-label="Foto 5: Kawah Gunung Ciremai" data-slide="4"></button></div>
+          <button class="hero-arrow" data-hero="1" aria-label="Foto berikutnya" aria-controls="hero-slides"><svg><use href="#i-chev" /></svg></button>
+          <span class="hero-count" aria-hidden="true"><b id="hero-index">01</b> / 05</span>
         </div>
       </div>
       <aside class="hero-card anim" style="--d:4" aria-label="Harga open trip">
