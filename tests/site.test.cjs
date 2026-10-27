@@ -20,16 +20,18 @@ const fail = (m) => { throw new Error(m); };
   if (wrong.length) fail(`WhatsApp links with another number: ${wrong.join(', ')}`);
 
   // Hero slideshow: arrows, dots, drag, and lazily loaded slide images.
-  const heroIndex = () => page.textContent('#hero-index');
-  await page.locator('[data-hero="1"]').click();
-  if ((await heroIndex()) !== '02') fail('Hero next arrow failed');
+  const heroIndex = () => page.$$eval('.hero-dots button', (bs) => bs.findIndex((b) => b.getAttribute('aria-current') === 'true') + 1);
+  await page.locator('.hero-dots button').nth(1).click();
+  if ((await heroIndex()) !== 2) fail('Hero dot did not move to slide 2');
   const slide2 = await page.$eval('.hero-slide.is-active img', (img) => img.currentSrc || img.src);
   if (!slide2.includes('clouds-blue')) fail(`Second slide image not loaded: ${slide2}`);
   await page.locator('.hero-dots button').nth(4).click();
-  if ((await heroIndex()) !== '05') fail('Hero dot failed');
+  if ((await heroIndex()) !== 5) fail('Hero dot failed');
+  // Compare against the slide right before the drag, since autoplay may have moved on meanwhile.
+  const beforeDrag = await heroIndex();
   await page.mouse.move(900, 300); await page.mouse.down(); await page.mouse.move(600, 310, { steps: 5 }); await page.mouse.up();
-  if ((await heroIndex()) !== '01') fail('Hero drag did not wrap to the first slide');
-  await page.waitForFunction(() => document.getElementById('hero-index').textContent === '02', null, { timeout: 8000 })
+  if ((await heroIndex()) !== (beforeDrag % 5) + 1) fail('Hero drag did not advance a slide');
+  await page.waitForFunction(() => document.querySelectorAll('.hero-dots button')[1].getAttribute('aria-current') === 'true', null, { timeout: 8000 })
     .catch(() => fail('Hero autoplay did not advance'));
 
   // Calculator: open trip = Rp250.000 x people, DP Rp50.000 x people.
@@ -67,6 +69,18 @@ const fail = (m) => { throw new Error(m); };
   await page.getByRole('button', { name: 'Lihat poster' }).click();
   if (!(await page.locator('#poster-dialog').isVisible())) fail('Poster dialog did not open');
   await page.keyboard.press('Escape');
+
+  // Floating WhatsApp stays out of the hero (it has its own WhatsApp button) and appears after it.
+  await page.evaluate(() => scrollTo({ top: 0, behavior: 'instant' })); await page.waitForTimeout(300);
+  if (!(await page.locator('.wa-float').evaluate((el) => el.classList.contains('is-hidden')))) fail('WhatsApp bubble covers the hero');
+  await page.evaluate(() => scrollTo({ top: 3000, behavior: 'instant' })); await page.waitForTimeout(300);
+  if (await page.locator('.wa-float').evaluate((el) => el.classList.contains('is-hidden'))) fail('WhatsApp bubble missing after the hero');
+
+  // Small phones: every hero text and button fits inside the screen.
+  await page.setViewportSize({ width: 360, height: 740 });
+  await page.reload({ waitUntil: 'networkidle' });
+  const clipped = await page.$$eval('.hero-inner *, .hero-card', (els) => els.filter((e) => e.getBoundingClientRect().right > innerWidth + 1).map((e) => e.className || e.tagName));
+  if (clipped.length) fail(`Hero content cut off at 360px: ${clipped.join(', ')}`);
 
   // Mobile: no overflow, and the menu fills the screen after scrolling (blurred nav must not trap it).
   await page.setViewportSize({ width: 390, height: 844 });

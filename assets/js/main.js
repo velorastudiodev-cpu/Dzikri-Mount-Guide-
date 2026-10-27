@@ -56,7 +56,6 @@ const goHero = (i) => {
   loadSlide(heroSlides[heroIndex]);
   heroSlides.forEach((s, n) => { s.classList.toggle('is-active', n === heroIndex); s.setAttribute('aria-hidden', String(n !== heroIndex)); });
   heroDots.forEach((d, n) => (n === heroIndex ? d.setAttribute('aria-current', 'true') : d.removeAttribute('aria-current')));
-  $('#hero-index').textContent = String(heroIndex + 1).padStart(2, '0');
   scheduleHero();
 };
 const scheduleHero = () => {
@@ -65,10 +64,12 @@ const scheduleHero = () => {
   hero.classList.toggle('is-paused', paused);
   if (!paused) heroTimer = setTimeout(() => goHero(heroIndex + 1), HERO_INTERVAL);
 };
-$$('[data-hero]').forEach((b) => b.addEventListener('click', () => goHero(heroIndex + Number(b.dataset.hero))));
 heroDots.forEach((d) => d.addEventListener('click', () => goHero(Number(d.dataset.slide))));
 hero.addEventListener('keydown', (e) => {
-  if (e.target.closest('.hero-controls') && (e.key === 'ArrowLeft' || e.key === 'ArrowRight')) goHero(heroIndex + (e.key === 'ArrowLeft' ? -1 : 1));
+  if (e.target.closest('.hero-dots') && (e.key === 'ArrowLeft' || e.key === 'ArrowRight')) {
+    goHero(heroIndex + (e.key === 'ArrowLeft' ? -1 : 1));
+    heroDots[heroIndex].focus();
+  }
 });
 let drag = null;
 hero.addEventListener('pointerdown', (e) => {
@@ -85,7 +86,8 @@ const endDrag = (e) => {
 };
 hero.addEventListener('pointerup', endDrag);
 hero.addEventListener('pointercancel', () => { drag = null; hero.classList.remove('is-dragging'); });
-new IntersectionObserver(([e]) => { heroInView = e.isIntersecting; scheduleHero(); }).observe(hero);
+const waFloat = $('.wa-float');
+new IntersectionObserver(([e]) => { heroInView = e.isIntersecting; waFloat.classList.toggle('is-hidden', heroInView); scheduleHero(); }).observe(hero);
 document.addEventListener('visibilitychange', scheduleHero);
 addEventListener('load', () => { loadSlide(heroSlides[1]); scheduleHero(); }, { once: true });
 
